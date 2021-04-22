@@ -1,6 +1,8 @@
 # DATABASE
 
 ## artifact
+|column|type|
+|---|---|
 |id|int|  
 |set|varchar(255)|  
 |rarity|varchar(255)|  
