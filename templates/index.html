@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bonjour</title>
+</head>
+<body>
+
+<h1>
+	Bonjour
+</h1>
+
+<textarea id="pasteArea" placeholder="Paste Image Here"></textarea>
+<img id="preview"></img>
+    <form action="" method=post enctype=multipart/form-data>
+    	<input id="pastedImage" type=file name=file>
+        <input type=submit value=Upload>
+    </form>
+
+<script type="text/javascript">
+document.getElementById('pasteArea').onpaste = function (event) {
+  // use event.originalEvent.clipboard for newer chrome versions
+  var items = (event.clipboardData  || event.originalEvent.clipboardData).items;
+  console.log(JSON.stringify(items)); // will give you the mime types
+  // find pasted image among pasted items
+  var blob = null;
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].type.indexOf("image") === 0) {
+      blob = items[i].getAsFile();
+    }
+  }
+  document.getElementById("pastedImage").files = event.clipboardData.files;
+  // load image if there is a pasted image
+  if (blob !== null) {
+    var reader = new FileReader();
+    reader.onload = function(event) {
+      // console.log(event.target.result); // data url!
+      document.getElementById("preview").src = event.target.result;
+    };
+    reader.readAsDataURL(blob);
+  }
+}
+</script>
+</body>
+</html>
+
